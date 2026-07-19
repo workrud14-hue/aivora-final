@@ -94,6 +94,10 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             FAQs
           </button>
+          <button data-tab="subscribers" class="tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-text-muted hover:bg-slate-100 hover:text-text transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Subscribers
+          </button>
           <button data-tab="settings" class="tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-text-muted hover:bg-slate-100 hover:text-text transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             Settings
@@ -177,6 +181,14 @@
                 </div>
                 <div class="text-3xl font-black" id="dash-unread-messages">0</div>
                 <div class="text-xs text-text-muted">New contact form submissions</div>
+              </div>
+              <div class="card-premium p-6 flex flex-col justify-between h-36">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-text-muted uppercase tracking-wider">Subscribers</span>
+                  <div class="p-2 rounded-lg bg-secondary/10 text-secondary"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                </div>
+                <div class="text-3xl font-black" id="dash-subscribers-count">0</div>
+                <div class="text-xs text-text-muted">Active newsletter subscribers</div>
               </div>
             </div>
 
@@ -463,6 +475,32 @@
             </div>
           </section>
 
+          <!-- SUBSCRIBERS TAB -->
+          <section id="tab-subscribers" class="tab-content hidden space-y-5">
+            <div class="flex items-center justify-between">
+              <input type="text" id="subscriber-search" placeholder="Search subscribers..." class="w-64 h-10 px-4 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-primary transition" />
+              <div class="flex items-center gap-2">
+                <button id="export-subscribers-btn" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold uppercase tracking-wider transition cursor-pointer">Export CSV</button>
+              </div>
+            </div>
+            <div class="card-premium rounded-2xl overflow-hidden">
+              <table class="w-full text-left">
+                <thead>
+                  <tr class="border-b border-slate-100 bg-slate-50 text-xs font-semibold text-text-muted uppercase tracking-wider">
+                    <th class="p-4">Email</th>
+                    <th class="p-4">Source</th>
+                    <th class="p-4">Subscribed</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-subscribers-list" class="divide-y divide-slate-100 text-sm">
+                  <tr><td colspan="5" class="p-8 text-center text-text-muted">Loading subscribers...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
           <!-- SETTINGS TAB -->
           <section id="tab-settings" class="tab-content hidden space-y-5">
             <h2 class="text-lg font-bold">Settings</h2>
@@ -673,6 +711,7 @@
       let allTestimonials = [];
       let allBlogPosts = [];
       let allFaqs = [];
+      let allSubscribers = [];
       let allContactMessages = [];
       let currentEditorType = '';
 
@@ -686,6 +725,7 @@
         testimonials: { title: 'Testimonials', subtitle: 'Manage customer reviews and testimonials' },
         blog: { title: 'Blog', subtitle: 'Create and publish content' },
         faqs: { title: 'FAQs', subtitle: 'Manage frequently asked questions' },
+        subscribers: { title: 'Subscribers', subtitle: 'Newsletter signups from your storefront' },
         settings: { title: 'Settings', subtitle: 'Configure your store settings' },
       };
 
@@ -764,6 +804,8 @@
         document.getElementById('mark-all-read-btn').addEventListener('click', markAllMessagesRead);
         document.getElementById('close-message-detail-btn').addEventListener('click', closeMessageDetail);
         document.getElementById('add-currency-btn').addEventListener('click', addCurrencyRate);
+        document.getElementById('subscriber-search').addEventListener('input', () => renderSubscribersTable(allSubscribers));
+        document.getElementById('export-subscribers-btn').addEventListener('click', exportSubscribersCSV);
 
         // Add buttons for new modules
         document.getElementById('add-order-btn').addEventListener('click', () => openOrderEditor(null));
@@ -846,6 +888,7 @@
           loadSettingsLogo(),
           loadContactMessages(),
           loadCurrencyRates(),
+          loadSubscribers(),
         ]);
         updateDashboardStats();
         renderDashboardWidgets();
@@ -857,6 +900,7 @@
         document.getElementById('dash-customer-count').textContent = allCustomers.length;
         const unread = allContactMessages.filter(m => !m.is_read).length;
         document.getElementById('dash-unread-messages').textContent = unread;
+        document.getElementById('dash-subscribers-count').textContent = allSubscribers.filter(s => s.is_active).length;
         const revenue = allOrders
           .filter(o => o.status === 'completed')
           .reduce((sum, o) => sum + parseFloat(o.amount || 0), 0);
@@ -1782,6 +1826,78 @@
         renderFaqTable(allFaqs);
       }
 
+      // --- SUBSCRIBERS ---
+      async function loadSubscribers() {
+        const { data, error } = await supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false });
+        if (error) { showToast('Load Error', error.message, 'error'); return; }
+        allSubscribers = data || [];
+        renderSubscribersTable(allSubscribers);
+        updateDashboardStats();
+      }
+
+      function renderSubscribersTable(subscribers) {
+        const tbody = document.getElementById('admin-subscribers-list');
+        if (!tbody) return;
+        const search = document.getElementById('subscriber-search').value.toLowerCase();
+        let filtered = subscribers;
+        if (search) {
+          filtered = filtered.filter(s => (s.email || '').toLowerCase().includes(search) || (s.source || '').toLowerCase().includes(search));
+        }
+        tbody.innerHTML = '';
+        if (!filtered.length) {
+          tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-text-muted">No subscribers found.</td></tr>';
+          return;
+        }
+        filtered.forEach(s => {
+          const tr = document.createElement('tr');
+          tr.className = `hover:bg-slate-50 transition-colors ${s.is_active ? '' : 'opacity-60'}`;
+          const subscribed = s.created_at ? new Date(s.created_at).toLocaleString() : '—';
+          tr.innerHTML = `
+            <td class="p-4 font-semibold">${s.email || '—'}</td>
+            <td class="p-4 text-sm text-text-muted">${s.source || 'footer'}</td>
+            <td class="p-4 text-xs text-text-muted">${subscribed}</td>
+            <td class="p-4"><span class="px-2 py-1 rounded-lg text-xs font-semibold uppercase ${s.is_active ? 'bg-success/10 text-success' : 'bg-slate-100 text-text-muted'}">${s.is_active ? 'Active' : 'Unsubscribed'}</span></td>
+            <td class="p-4 text-right"><div class="inline-flex items-center gap-2"><button data-toggle-subscriber="${s.id}" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold transition cursor-pointer">${s.is_active ? 'Unsubscribe' : 'Reactivate'}</button><button data-delete-subscriber="${s.id}" class="px-3 py-1.5 rounded-lg bg-error/10 hover:bg-error/20 text-error text-xs font-semibold transition cursor-pointer">Delete</button></div></td>
+          `;
+          tbody.appendChild(tr);
+        });
+        tbody.querySelectorAll('[data-toggle-subscriber]').forEach(btn => btn.addEventListener('click', () => toggleSubscriber(btn.getAttribute('data-toggle-subscriber'))));
+        tbody.querySelectorAll('[data-delete-subscriber]').forEach(btn => btn.addEventListener('click', () => {
+          deleteTargetId = btn.getAttribute('data-delete-subscriber');
+          deleteTargetType = 'subscriber';
+          document.getElementById('delete-confirm-message').textContent = 'Delete this subscriber permanently?';
+          openDeleteModal();
+        }));
+      }
+
+      async function toggleSubscriber(id) {
+        const s = allSubscribers.find(x => x.id === id);
+        if (!s) return;
+        const { error } = await supabase.from('newsletter_subscribers').update({ is_active: !s.is_active }).eq('id', id);
+        if (error) { showToast('Error', error.message, 'error'); return; }
+        allSubscribers = allSubscribers.map(x => x.id === id ? { ...x, is_active: !x.is_active } : x);
+        renderSubscribersTable(allSubscribers);
+        updateDashboardStats();
+        showToast('Updated', `Subscriber ${s.is_active ? 'unsubscribed' : 'reactivated'}.`, 'success');
+      }
+
+      function exportSubscribersCSV() {
+        const active = allSubscribers.filter(s => s.is_active);
+        if (!active.length) { showToast('No Subscribers', 'There are no active subscribers to export.', 'error'); return; }
+        const rows = [['email', 'source', 'subscribed_at']];
+        active.forEach(s => rows.push([s.email || '', s.source || '', s.created_at || '']));
+        const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `subscribers_${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
       function renderFaqTable(faqs) {
         const tbody = document.getElementById('admin-faqs-list');
         tbody.innerHTML = '';
@@ -2110,7 +2226,7 @@
         const btn = document.getElementById('confirm-delete-btn');
         btn.disabled = true; btn.textContent = 'Deleting...';
         try {
-          const tableMap = { product: 'products', order: 'orders', customer: 'customers', coupon: 'coupons', testimonial: 'testimonials', blog: 'blog_posts', faq: 'faqs', message: 'contact_messages' };
+          const tableMap = { product: 'products', order: 'orders', customer: 'customers', coupon: 'coupons', testimonial: 'testimonials', blog: 'blog_posts', faq: 'faqs', message: 'contact_messages', subscriber: 'newsletter_subscribers' };
           const table = tableMap[deleteTargetType] || 'products';
           const { error } = await supabase.from(table).delete().eq('id', deleteTargetId);
           if (error) throw error;
@@ -2125,6 +2241,7 @@
           else if (deleteTargetType === 'blog') await loadBlogPosts();
           else if (deleteTargetType === 'faq') await loadFaqs();
           else if (deleteTargetType === 'message') await loadContactMessages();
+          else if (deleteTargetType === 'subscriber') await loadSubscribers();
           updateDashboardStats();
         } catch (err) {
           showToast('Delete Failed', err.message, 'error');

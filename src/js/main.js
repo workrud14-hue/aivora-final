@@ -452,11 +452,34 @@ function initNewsletterForm() {
   const form = document.getElementById('newsletter-form');
   const success = document.getElementById('newsletter-success');
   if (!form || !success) return;
-  form.addEventListener('submit', (e) => {
+  const errorBox = document.getElementById('newsletter-error');
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    success.classList.remove('hidden');
-    form.reset();
-    setTimeout(() => success.classList.add('hidden'), 4000);
+    const emailInput = form.querySelector('input[type="email"]');
+    const email = (emailInput?.value || '').trim();
+    if (!email) return;
+    success.classList.add('hidden');
+    if (errorBox) errorBox.classList.add('hidden');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalLabel = submitBtn?.innerHTML;
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<span class="inline-block animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>'; }
+    try {
+      const { error } = await supabase.from('newsletter_subscribers').insert({ email, source: 'footer' });
+      if (error) {
+        // 23505 = unique_violation → already subscribed; treat as success
+        if (error.code !== '23505') throw error;
+      }
+      form.reset();
+      success.classList.remove('hidden');
+      setTimeout(() => success.classList.add('hidden'), 5000);
+    } catch (err) {
+      if (errorBox) {
+        errorBox.textContent = 'Could not subscribe. Please try again later.';
+        errorBox.classList.remove('hidden');
+      }
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = originalLabel; }
+    }
   });
 }
 
