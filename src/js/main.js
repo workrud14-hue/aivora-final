@@ -479,6 +479,15 @@ function initNewsletterForm() {
       form.reset();
       success.classList.remove('hidden');
       setTimeout(() => success.classList.add('hidden'), 5000);
+      // Trigger welcome email immediately (fire-and-forget)
+      try {
+        await supabase.from('email_queue').insert({
+          type: 'welcome',
+          to_email: email,
+          subject: 'Welcome to Aivora!'
+        });
+        fetch('/api/send-email', { method: 'POST' }).catch(() => {});
+      } catch (e) {} // silent fail — cron will catch it later
     } catch (err) {
       if (errorBox) {
         errorBox.textContent = 'Could not subscribe. Please try again later.';
