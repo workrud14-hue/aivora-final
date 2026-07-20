@@ -381,9 +381,25 @@ async function loadProductDetail() {
     const priceEl = document.getElementById('product-price-section');
     if (priceEl) await renderPriceInto(priceEl, data.price, data.sale_price, data.currency);
 
-    const checkoutBtn = document.getElementById('payhip-checkout-btn');
-    if (checkoutBtn && data.payhip_url) {
-      checkoutBtn.href = data.payhip_url;
+    // Sticky Get It Now bar
+    const stickyBtn = document.getElementById('sticky-checkout-btn');
+    if (stickyBtn && data.payhip_url) {
+      stickyBtn.href = data.payhip_url;
+    }
+    const stickyTitle = document.getElementById('sticky-product-title');
+    if (stickyTitle) stickyTitle.textContent = data.title || '';
+    const stickyPrice = document.getElementById('sticky-product-price');
+    if (stickyPrice) {
+      try {
+        stickyPrice.textContent = await formatPrice(data.price, data.sale_price, data.currency);
+      } catch (e) {
+        stickyPrice.textContent = '$' + parseFloat(data.price).toFixed(2);
+      }
+    }
+    const stickyThumb = document.getElementById('sticky-product-thumb');
+    if (stickyThumb && data.image) {
+      stickyThumb.src = data.image;
+      stickyThumb.style.display = '';
     }
 
     const descEl = document.getElementById('product-description-long');

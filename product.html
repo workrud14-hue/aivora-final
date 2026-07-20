@@ -77,8 +77,8 @@
         <div class="lg:col-span-5 reveal-left opacity-0">
           <div class="sticky top-28">
             <div class="relative overflow-hidden rounded-[24px] bg-white border border-slate-200 p-3 shadow-xl">
-              <div class="aspect-[4/5] overflow-hidden rounded-[20px] border border-slate-100 relative">
-                <img id="product-cover-image" src="" alt="Product Cover" class="w-full h-full object-cover" referrerpolicy="no-referrer" />
+              <div class="overflow-hidden rounded-[20px] border border-slate-100 relative">
+                <img id="product-cover-image" src="" alt="Product Cover" class="w-full h-auto max-h-[600px] object-contain bg-white" referrerpolicy="no-referrer" />
               </div>
             </div>
 
@@ -129,10 +129,7 @@
                 </div>
               </div>
 
-              <a id="payhip-checkout-btn" href="" class="inline-flex items-center justify-center w-full h-14 rounded-2xl btn-primary text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer">
-                Unlock Instant Download
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="ml-2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-              </a>
+
 
               <div class="flex items-center justify-center gap-6 mt-4 text-[11px] text-slate-500">
                 <span class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-success mr-1.5"></i> PDF Download</span>
@@ -241,9 +238,26 @@
       </div>
     </footer>
 
-    <button id="back-to-top" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-xl btn-primary flex items-center justify-center cursor-pointer shadow-lg opacity-0 pointer-events-none translate-y-4 transition-all duration-300" aria-label="Scroll Back to Top">
+    <button id="back-to-top" class="fixed bottom-24 right-6 z-40 w-12 h-12 rounded-xl btn-primary flex items-center justify-center cursor-pointer shadow-lg opacity-0 pointer-events-none translate-y-4 transition-all duration-300" aria-label="Scroll Back to Top">
       <i data-lucide="arrow-up" class="w-5 h-5"></i>
     </button>
+
+    <!-- Sticky Get It Now Bar -->
+    <div id="sticky-cta-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-700 px-6 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div class="hidden sm:flex items-center gap-3">
+          <img id="sticky-product-thumb" src="" alt="" class="w-10 h-10 rounded-lg object-cover border border-slate-200" referrerpolicy="no-referrer" style="display:none" />
+          <div>
+            <div id="sticky-product-title" class="text-sm font-bold text-text truncate max-w-[200px]"></div>
+            <div id="sticky-product-price" class="text-xs text-slate-500"></div>
+          </div>
+        </div>
+        <a id="sticky-checkout-btn" href="" class="flex items-center justify-center gap-2 h-12 px-8 rounded-xl btn-primary text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-[0.98]">
+          Get It Now
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
