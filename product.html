@@ -71,7 +71,19 @@
 
     <!-- Product Layout -->
     <main class="pt-32 pb-24 md:pt-40 relative z-10" id="product-detail-section">
-      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="max-w-7xl mx-auto px-6">
+        <!-- Skeleton shown while loading -->
+        <div id="product-skeleton" class="skeleton-detail">
+          <div class="skeleton skeleton-cover"></div>
+          <div class="skeleton-info">
+            <div class="skeleton skeleton-cat"></div>
+            <div class="skeleton skeleton-heading"></div>
+            <div class="skeleton skeleton-sub"></div>
+            <div class="skeleton skeleton-desc"></div>
+          </div>
+        </div>
+      </div>
+      <div id="product-content" class="hidden max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
         <!-- Left: Cover Image -->
         <div class="lg:col-span-5 reveal-left opacity-0">
@@ -147,7 +159,8 @@
             </div>
           </div>
         </div>
-      </div>            <!-- Reviews Section -->
+      </div>
+      <!-- Reviews Section -->
       <section class="max-w-7xl mx-auto px-6 mt-24 pt-24 border-t border-slate-100">
         <div class="mb-12">
           <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-2 block">Customer Reviews</span>
@@ -241,18 +254,18 @@
     </button>
 
     <!-- Sticky Get It Now Bar -->
-    <div id="sticky-cta-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-700 px-6 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        <div class="hidden sm:flex items-center gap-3">
-          <img id="sticky-product-thumb" src="" alt="" class="w-10 h-10 rounded-lg object-cover border border-slate-200" referrerpolicy="no-referrer" style="display:none" />
-          <div>
-            <div id="sticky-product-title" class="text-sm font-bold text-text truncate max-w-[200px]"></div>
-            <div id="sticky-product-price" class="text-xs text-slate-500"></div>
+    <div id="sticky-cta-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-700 px-4 py-2.5 md:px-6 md:py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-4">
+        <div class="hidden sm:flex items-center gap-2 md:gap-3">
+          <img id="sticky-product-thumb" src="" alt="" class="w-8 h-8 md:w-10 md:h-10 rounded-lg object-cover border border-slate-200" referrerpolicy="no-referrer" style="display:none" />
+          <div class="hidden xs:block">
+            <div id="sticky-product-title" class="text-xs md:text-sm font-bold text-text truncate max-w-[100px] md:max-w-[200px]"></div>
+            <div id="sticky-product-price" class="text-[10px] md:text-xs text-slate-500"></div>
           </div>
         </div>
-        <a id="sticky-checkout-btn" href="" class="flex items-center justify-center gap-2 h-12 px-8 rounded-xl btn-primary text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-[0.98]">
+        <a id="sticky-checkout-btn" href="" class="flex items-center justify-center gap-2 h-11 md:h-12 px-5 md:px-8 w-full sm:w-auto rounded-xl md:rounded-xl btn-primary text-xs md:text-sm font-bold tracking-wider uppercase transition-all duration-300 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-[0.98]">
           Get It Now
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
       </div>
     </div>

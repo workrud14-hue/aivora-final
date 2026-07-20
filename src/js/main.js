@@ -360,6 +360,12 @@ async function loadProductDetail() {
 
     document.title = data.seo_title || data.title + ' - Aivora';
 
+    // Hide skeleton, show actual content
+    const skel = document.getElementById('product-skeleton');
+    const pContent = document.getElementById('product-content');
+    if (skel) skel.style.display = 'none';
+    if (pContent) pContent.classList.remove('hidden');
+
     // Inject product JSON-LD schema
     injectProductSchema(data);
 
