@@ -118,6 +118,34 @@
       </div>
     </div>
 
+    <!-- Standalone auth script (runs before Vite module, immune to React Refresh crashes) -->
+    <script>
+      (function() {
+        var ADMIN_PW = 'anirudh@1411';
+        var SESSION_KEY = 'aivora_admin_session';
+        var form = document.getElementById('auth-form');
+        if (!form) return;
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var pw = document.getElementById('admin-password').value;
+          var errEl = document.getElementById('auth-error');
+          if (pw === ADMIN_PW) {
+            sessionStorage.setItem(SESSION_KEY, 'active');
+            document.getElementById('auth-overlay').classList.add('hidden');
+            document.getElementById('admin-app').classList.remove('hidden');
+          } else {
+            errEl.textContent = 'Incorrect password. Access denied.';
+            errEl.classList.remove('hidden');
+          }
+        });
+        // Auto-login if session active
+        if (sessionStorage.getItem(SESSION_KEY) === 'active') {
+          document.getElementById('auth-overlay').classList.add('hidden');
+          document.getElementById('admin-app').classList.remove('hidden');
+        }
+      })();
+    </script>
+
     <!-- Sidebar + Main Layout -->
     <div id="admin-app" class="hidden min-h-screen flex">
 
