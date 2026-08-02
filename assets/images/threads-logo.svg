@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="22" fill="#000000"/>
+  <g transform="translate(50,50)">
+    <!-- Threads @ symbol -->
+    <path d="M-8,-28 C-8,-28 -20,-24 -20,-10 C-20,4 -8,8 -2,8 C4,8 10,4 10,-2 C10,-8 6,-12 0,-12 C-6,-12 -10,-8 -10,-4" 
+          fill="none" stroke="white" stroke-width="6" stroke-linecap="round"/>
+    <path d="M-10,-4 C-10,-4 -8,10 -2,16 C4,22 14,22 18,18 C22,14 22,6 18,2 C14,-2 6,-2 2,2" 
+          fill="none" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>
