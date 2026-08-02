@@ -46,12 +46,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       throw new Error('No rates returned from exchange API');
     }
 
-    // Update each currency in Supabase
+    // Update each currency in Supabase with a single idempotent upsert.
+    // PostgREST treats POST + Prefer: resolution=merge-duplicates as an upsert
+    // keyed on the primary key (currency), so rows are inserted or updated.
     const results = [];
     for (const cur of CURRENCIES) {
       if (data.rates[cur.code]) {
-        const { error } = await fetch(`${SUPABASE_URL}/rest/v1/currency_rates?currency=eq.${cur.code}`, {
-          method: 'PATCH',
+        const upsertRes = await fetch(`${SUPABASE_URL}/rest/v1/currency_rates`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'apikey': SUPABASE_SERVICE_KEY,
@@ -59,29 +61,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             'Prefer': 'resolution=merge-duplicates',
           },
           body: JSON.stringify({
+            currency: cur.code,
             rate: data.rates[cur.code],
             symbol: cur.symbol,
             updated_at: new Date().toISOString(),
           }),
         });
 
-        // If update failed (row doesn't exist), insert it
-        if (error || true) {
-          await fetch(`${SUPABASE_URL}/rest/v1/currency_rates`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': SUPABASE_SERVICE_KEY,
-              'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-              'Prefer': 'resolution=merge-duplicates',
-            },
-            body: JSON.stringify({
-              currency: cur.code,
-              rate: data.rates[cur.code],
-              symbol: cur.symbol,
-              updated_at: new Date().toISOString(),
-            }),
-          });
+        if (!upsertRes.ok) {
+          console.warn(`Failed to upsert ${cur.code}: ${upsertRes.status} ${await upsertRes.text()}`);
+          continue;
         }
 
         results.push({ currency: cur.code, rate: data.rates[cur.code] });

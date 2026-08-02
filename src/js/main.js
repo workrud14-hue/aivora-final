@@ -32,6 +32,37 @@ function detectUserCurrencyCode() {
   return 'USD';
 }
 
+// --- Live exchange rate fetching (accurate, cached 1h) ---
+const RATE_CACHE_KEY = 'aivora_live_rates';
+const RATE_CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+const CURRENCY_SYMBOLS = { EUR: '€', GBP: '£', INR: '₹', JPY: '¥', AUD: 'A$', CAD: 'C$', SGD: 'S$', AED: 'د.إ', NGN: '₦' };
+
+async function fetchLiveRates() {
+  // 1) Check localStorage cache (1h TTL)
+  try {
+    const cached = localStorage.getItem(RATE_CACHE_KEY);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (parsed && parsed.fetchedAt && parsed.rates && (Date.now() - parsed.fetchedAt) < RATE_CACHE_TTL) {
+        return parsed.rates;
+      }
+    }
+  } catch (e) {}
+
+  // 2) Fetch live rates
+  const response = await fetch('https://open.er-api.com/v6/latest/USD');
+  if (!response.ok) throw new Error('Exchange API error ' + response.status);
+  const data = await response.json();
+  if (!data.rates) throw new Error('No rates in exchange response');
+
+  // 3) Cache for next visit
+  try {
+    localStorage.setItem(RATE_CACHE_KEY, JSON.stringify({ rates: data.rates, fetchedAt: Date.now() }));
+  } catch (e) {}
+  return data.rates;
+}
+
 async function loadUserCurrency() {
   if (userCurrency) return userCurrency;
   const code = detectUserCurrencyCode();
@@ -39,6 +70,17 @@ async function loadUserCurrency() {
     userCurrency = { code: 'USD', rate: 1, symbol: '$' };
     return userCurrency;
   }
+
+  // 1) Live rates first — prices stay accurate even if the DB/cron is stale
+  try {
+    const rates = await fetchLiveRates();
+    if (rates && rates[code]) {
+      userCurrency = { code, rate: parseFloat(rates[code]), symbol: CURRENCY_SYMBOLS[code] || code + ' ' };
+      return userCurrency;
+    }
+  } catch (e) {}
+
+  // 2) Fall back to the database rate
   try {
     const { data } = await supabase.from('currency_rates').select('currency, rate, symbol').eq('currency', code).maybeSingle();
     if (data && data.rate) {
@@ -387,10 +429,48 @@ async function loadProductDetail() {
     const priceEl = document.getElementById('product-price-section');
     if (priceEl) await renderPriceInto(priceEl, data.price, data.sale_price, data.currency);
 
-    // Sticky Get It Now bar
+    // Sticky Get It Now bar — Dodo Payments checkout with Payhip fallback
     const stickyBtn = document.getElementById('sticky-checkout-btn');
-    if (stickyBtn && data.payhip_url) {
-      stickyBtn.href = data.payhip_url;
+    if (stickyBtn) {
+      const effectivePrice = data.sale_price && parseFloat(data.sale_price) > 0 && parseFloat(data.sale_price) < parseFloat(data.price)
+        ? parseFloat(data.sale_price)
+        : parseFloat(data.price);
+      stickyBtn.href = data.payhip_url || '#';
+      stickyBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        stickyBtn.disabled = true;
+        const originalHTML = stickyBtn.innerHTML;
+        stickyBtn.innerHTML = '<span class="inline-block animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span> Redirecting...';
+        try {
+          const res = await fetch('/api/dodo-checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: data.title,
+              amount: effectivePrice,
+              product_slug: data.slug,
+              product_id: data.id || '',
+              return_url: window.location.href + (window.location.href.includes('?') ? '&' : '?') + 'checkout=success',
+              cancel_url: window.location.href,
+            }),
+          });
+          const json = await res.json();
+          if (res.ok && json.checkout_url) {
+            window.location.href = json.checkout_url;
+            return;
+          }
+          throw new Error(json.error || 'Dodo checkout unavailable');
+        } catch (err) {
+          // Fallback: Payhip link (if the product has one)
+          if (data.payhip_url) {
+            window.location.href = data.payhip_url;
+            return;
+          }
+          stickyBtn.disabled = false;
+          stickyBtn.innerHTML = originalHTML;
+          alert('Checkout is temporarily unavailable. Please try again later.');
+        }
+      });
     }
     const stickyTitle = document.getElementById('sticky-product-title');
     if (stickyTitle) stickyTitle.textContent = data.title || '';
@@ -976,41 +1056,30 @@ function initReviewForm(productId) {
 
 // --- Automated Currency Rate Updates (client-side fetch) ---
 async function autoUpdateCurrencyRates() {
-  const lastUpdate = localStorage.getItem('aivora_rates_updated');
-  const now = Date.now();
-  // Only update once per 24 hours
-  if (lastUpdate && (now - parseInt(lastUpdate)) < 86400000) return;
-
   try {
-    const response = await fetch('https://open.er-api.com/v6/latest/USD');
-    if (!response.ok) return;
-    const data = await response.json();
-    if (!data.rates) return;
+    // Reuse the 1h-cached live rates (no extra network call on repeat visits)
+    const rates = await fetchLiveRates();
+    if (!rates) return;
 
-    const currenciesToUpdate = [
-      { code: 'EUR', symbol: '€' },
-      { code: 'GBP', symbol: '£' },
-      { code: 'INR', symbol: '₹' },
-      { code: 'JPY', symbol: '¥' },
-      { code: 'AUD', symbol: 'A$' },
-      { code: 'CAD', symbol: 'C$' },
-      { code: 'SGD', symbol: 'S$' },
-      { code: 'AED', symbol: 'د.إ' },
-      { code: 'NGN', symbol: '₦' },
-    ];
+    // Sync to the DB at most every 6 hours per browser
+    const lastSync = localStorage.getItem('aivora_rates_synced');
+    const now = Date.now();
+    if (lastSync && (now - parseInt(lastSync)) < 6 * 60 * 60 * 1000) return;
 
-    for (const cur of currenciesToUpdate) {
-      if (data.rates[cur.code]) {
+    const currenciesToUpdate = Object.keys(CURRENCY_SYMBOLS);
+
+    for (const code of currenciesToUpdate) {
+      if (rates[code]) {
         await supabase.from('currency_rates').upsert({
-          currency: cur.code,
-          rate: data.rates[cur.code],
-          symbol: cur.symbol,
+          currency: code,
+          rate: rates[code],
+          symbol: CURRENCY_SYMBOLS[code],
           updated_at: new Date().toISOString()
         }, { onConflict: 'currency' });
       }
     }
 
-    localStorage.setItem('aivora_rates_updated', String(now));
+    localStorage.setItem('aivora_rates_synced', String(now));
   } catch (e) {
     // currency updates are best-effort
   }

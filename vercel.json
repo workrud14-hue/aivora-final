@@ -20,7 +20,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval' https://payhip.com https://www.paypal.com https://www.paypalobjects.com https://unpkg.com https://js.braintreegateway.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:; connect-src 'self' https://*.supabase.co https://open.er-api.com https://api.brevo.com; frame-src https://payhip.com https://www.paypal.com;"
+          "value": "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval' https://payhip.com https://www.paypal.com https://www.paypalobjects.com https://unpkg.com https://js.braintreegateway.com https://live.dodopayments.com https://test.dodopayments.com https://checkout.dodopayments.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:; connect-src 'self' https://*.supabase.co https://open.er-api.com https://api.brevo.com https://live.dodopayments.com https://test.dodopayments.com; frame-src https://payhip.com https://www.paypal.com https://live.dodopayments.com https://test.dodopayments.com https://checkout.dodopayments.com;"
         },
         {
           "key": "Referrer-Policy",
