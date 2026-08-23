@@ -113,6 +113,7 @@ export default defineConfig(() => {
           cookie: path.resolve(__dirname, 'cookie-policy.html'),
           blog: path.resolve(__dirname, 'blog.html'),
           blogPost: path.resolve(__dirname, 'blog-post.html'),
+          success: path.resolve(__dirname, 'success.html'),
           admin: path.resolve(__dirname, 'admin.html'),
         },
       },
