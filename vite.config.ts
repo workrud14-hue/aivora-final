@@ -114,6 +114,7 @@ export default defineConfig(() => {
           blog: path.resolve(__dirname, 'blog.html'),
           blogPost: path.resolve(__dirname, 'blog-post.html'),
           success: path.resolve(__dirname, 'success.html'),
+          defenseKit: path.resolve(__dirname, 'defense-kit.html'),
           admin: path.resolve(__dirname, 'admin.html'),
         },
       },
