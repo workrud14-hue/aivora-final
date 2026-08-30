@@ -7,9 +7,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
-const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@aivora.opik.net';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@avoriai.vercel.app';
 const FROM_NAME = process.env.FROM_NAME || 'Aivora';
-const SITE_URL = process.env.SITE_URL || 'https://aivora.opik.net';
+const SITE_URL = process.env.SITE_URL || 'https://avoriai.vercel.app';
 
 interface EmailJob {
   id: string;

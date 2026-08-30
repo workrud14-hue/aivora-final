@@ -1,81 +1,44 @@
 // Vercel Serverless Function: POST /api/dodo-webhook
-// Receives Dodo Payments webhook events (payment.succeeded, payment.failed).
-// Verifies the signature, records the order in Supabase, and queues a purchase confirmation email.
-// Requires DODO_WEBHOOK_SECRET env var (configured in the Dodo dashboard webhook settings).
+// Receives Dodo Payments webhook events (payment.succeeded, etc.).
+// Verifies the signature via the official SDK, records the order in Supabase,
+// and queues a purchase confirmation email.
+//
+// Env vars:
+//   DODO_API_KEY          — API key (used to build the client + webhook key)
+//   DODO_WEBHOOK_SECRET   — signing secret from Dodo dashboard webhook settings
+//   SUPABASE_URL / SUPABASE_SERVICE_KEY — for order + email_queue writes
 
+import { DodoPayments } from 'dodopayments';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import crypto from 'crypto';
 
+const DODO_API_KEY = process.env.DODO_API_KEY;
 const DODO_WEBHOOK_SECRET = process.env.DODO_WEBHOOK_SECRET;
+const DODO_ENV = process.env.DODO_ENV || process.env.DODO_TEST_MODE === 'true' ? 'test' : 'live';
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
-const SITE_URL = process.env.SITE_URL || 'https://aivora.opik.net';
+const SITE_URL = process.env.SITE_URL || 'https://avoriai.vercel.app';
 
-interface DodoEvent {
-  type?: string;
-  event_type?: string;
-  payment?: {
-    payment_id?: string;
-    status?: string;
-    total_amount?: number;
-    currency?: string;
-    customer?: { email?: string; name?: string };
-    metadata?: Record<string, string>;
-  };
-  data?: any;
-  [key: string]: any;
-}
+const client = DODO_API_KEY
+  ? new DodoPayments({
+      bearerToken: DODO_API_KEY,
+      environment: DODO_ENV === 'test' ? 'test_mode' : 'live_mode',
+      ...(DODO_WEBHOOK_SECRET ? { webhookKey: DODO_WEBHOOK_SECRET } : {}),
+    })
+  : null;
 
-function verifySignature(rawBody: string, headers: Record<string, string | string[] | undefined>): boolean {
-  if (!DODO_WEBHOOK_SECRET) {
-    // No secret configured: log a warning but accept (test mode). In production you should set it.
-    return true;
-  }
-
-  const get = (name: string) => {
-    const v = headers[name] ?? headers[name.toLowerCase()];
-    return Array.isArray(v) ? v[0] : v;
-  };
-
-  const webhookId = get('webhook-id') || get('webhook_id') || get('Dodo-Webhook-Id');
-  const timestamp = get('webhook-timestamp') || get('webhook_timestamp') || get('Dodo-Webhook-Timestamp');
-  const signatureHeader = get('webhook-signature') || get('webhook_signature') || get('Dodo-Signature');
-
-  if (!webhookId || !timestamp || !signatureHeader) return false;
-
-  // Standard Webhooks spec: signed content is "<id>.<timestamp>.<rawBody>",
-  // signature is HMAC-SHA256 with the webhook secret, base64 encoded, "v1," prefixed.
-  const signedContent = `${webhookId}.${timestamp}.${rawBody}`;
-  const expected = crypto.createHmac('sha256', DODO_WEBHOOK_SECRET).update(signedContent).digest('base64');
-
-  const received = signatureHeader
-    .split(',')
-    .map((s) => s.trim())
-    .filter((s) => s && !s.startsWith('v1,'))
-    .pop() || signatureHeader.split(' ').pop() || '';
-
-  const safeEqual = (a: string, b: string) => {
-    const bufA = Buffer.from(a);
-    const bufB = Buffer.from(b);
-    if (bufA.length !== bufB.length) return false;
-    return crypto.timingSafeEqual(bufA, bufB);
-  };
-
-  return safeEqual(expected, received);
-}
-
-async function recordOrder(event: DodoEvent): Promise<void> {
-  const payment = event.payment || event.data?.payment || {};
+async function recordOrder(event: any): Promise<void> {
+  // Dodo webhook payload: { business_id, data: Payment, timestamp, type }
+  const payment = event.data || {};
   const metadata = payment.metadata || {};
   const customer = payment.customer || {};
 
   const order = {
     product_id: metadata.product_id || '',
-    product_title: metadata.product_title || 'Aivora Digital Product',
+    product_title: metadata.product_title || payment.product_cart?.[0]?.name || 'Aivora Digital Product',
     product_slug: metadata.product_slug || '',
     customer_email: customer.email || '',
     customer_name: customer.name || '',
-    amount: payment.total_amount ? (payment.total_amount / 100) : 0,
+    amount: payment.total_amount ? payment.total_amount / 100 : 0,
     currency: payment.currency || 'USD',
     payment_id: payment.payment_id || '',
     status: payment.status || 'succeeded',
@@ -83,7 +46,7 @@ async function recordOrder(event: DodoEvent): Promise<void> {
   };
 
   if (SUPABASE_URL && SUPABASE_SERVICE_KEY) {
-    // Upsert order by payment_id to stay idempotent against webhook retries.
+    // Idempotent upsert keyed on payment_id to survive webhook retries
     await fetch(`${SUPABASE_URL}/rest/v1/orders?payment_id=eq.${encodeURIComponent(order.payment_id)}`, {
       method: 'GET',
       headers: {
@@ -107,14 +70,13 @@ async function recordOrder(event: DodoEvent): Promise<void> {
       })
       .then((insertRes) => {
         if (insertRes && !insertRes.ok) {
-          // Table may not exist yet — don't crash the webhook, just log.
           console.warn('Order insert skipped (table may be missing):', insertRes.status);
         }
       })
       .catch((e) => console.warn('Order recording skipped:', e.message));
   }
 
-  // Queue purchase confirmation email
+  // Queue purchase confirmation email (delivered by the Brevo pipeline)
   if (order.customer_email && SUPABASE_URL && SUPABASE_SERVICE_KEY) {
     try {
       await fetch(`${SUPABASE_URL}/rest/v1/email_queue`, {
@@ -154,16 +116,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     rawBody = '';
   }
 
-  if (!verifySignature(rawBody, req.headers as Record<string, string | string[] | undefined>)) {
-    return res.status(401).json({ error: 'Invalid signature' });
+  let event: any;
+  if (client && DODO_WEBHOOK_SECRET) {
+    // Official SDK signature verification (Standard Webhooks spec)
+    try {
+      event = client.webhooks.unwrap(rawBody, {
+        headers: req.headers as Record<string, string>,
+        key: DODO_WEBHOOK_SECRET,
+      });
+    } catch (e) {
+      return res.status(401).json({ error: 'Invalid signature' });
+    }
+  } else {
+    // Test mode fallback: no secret configured — accept but log
+    try {
+      event = JSON.parse(rawBody);
+    } catch (e) {
+      return res.status(400).json({ error: 'Invalid body' });
+    }
   }
 
-  const event = (req.body || {}) as DodoEvent;
-  const eventType = event.type || event.event_type || (event.data && event.data.type) || '';
-  const paymentStatus = event.payment?.status || event.data?.payment?.status || '';
+  const eventType = event?.type || '';
+  const paymentStatus = event?.data?.status || '';
 
   // Only act on succeeded payments (ignore other events, still ack them)
-  if (eventType.includes('succeeded') || eventType.includes('payment') && paymentStatus === 'succeeded' || paymentStatus === 'succeeded') {
+  if (eventType === 'payment.succeeded' || (eventType.includes('payment') && paymentStatus === 'succeeded')) {
     try {
       await recordOrder(event);
     } catch (e) {

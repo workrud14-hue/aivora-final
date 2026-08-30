@@ -4,6 +4,8 @@ dist/
 coverage/
 .DS_Store
 *.log
-.env*
-!.env.example
 .env
+.env.*
+!.env.example
+tsconfig.tsbuildinfo
+supabase/.temp/

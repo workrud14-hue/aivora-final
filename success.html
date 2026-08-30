@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Successful - Aivora</title>
+    <meta name="description" content="Your payment was successful! Access your digital products now." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg" />
+    <link rel="stylesheet" href="/src/index.css" />
+    <style>
+      .success-checkmark {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 24px;
+        position: relative;
+      }
+      .success-checkmark::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        animation: successPulse 2s ease-in-out infinite;
+      }
+      .success-checkmark svg {
+        position: relative;
+        z-index: 1;
+        margin-top: 20px;
+        margin-left: 20px;
+      }
+      @keyframes successPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+      }
+      .confetti {
+        position: fixed;
+        top: -10px;
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        animation: confettiFall linear forwards;
+        pointer-events: none;
+        z-index: 100;
+      }
+      @keyframes confettiFall {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+      }
+    </style>
+  </head>
+  <body class="bg-bg text-text font-sans selection:bg-primary/20 antialiased">
+
+    <div class="aurora-bg">
+      <div class="blob blob-primary"></div>
+      <div class="blob blob-secondary"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <nav class="fixed top-0 inset-x-0 z-40 transition-all duration-300 py-5 border-b border-transparent">
+      <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2.5 text-2xl font-black tracking-tight text-text group">
+          <img data-site-logo src="" alt="Aivora Logo" class="w-9 h-9 rounded-xl object-cover border border-slate-200 shadow-lg group-hover:scale-105 transition-transform" referrerpolicy="no-referrer" style="display:none" />
+          <span data-logo-fallback class="w-9 h-9 rounded-xl gradient-bg flex items-center justify-center text-white font-black text-sm shadow-lg">A</span>
+          <span class="gradient-text">Aivora</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="index.html" class="text-slate-600 hover:text-primary transition-colors">Home</a>
+          <a href="products.html" class="text-slate-600 hover:text-primary transition-colors">Products</a>
+          <a href="blog.html" class="text-slate-600 hover:text-primary transition-colors">Blog</a>
+          <a href="about.html" class="text-slate-600 hover:text-primary transition-colors">About</a>
+        </div>
+        <button id="mobile-menu-btn" aria-expanded="false" class="md:hidden p-2 text-slate-600 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden fixed top-[72px] inset-x-6 glass-panel rounded-2xl p-6 flex flex-col gap-4 border border-slate-200 opacity-0 -translate-y-4 transition-all duration-300 z-50">
+        <a href="index.html" class="text-slate-600 hover:text-primary font-medium">Home</a>
+        <a href="products.html" class="text-slate-600 hover:text-primary font-medium">Products</a>
+        <a href="blog.html" class="text-slate-600 hover:text-primary font-medium">Blog</a>
+        <a href="about.html" class="text-slate-600 hover:text-primary font-medium">About</a>
+      </div>
+    </nav>
+
+    <main class="pt-40 pb-24 md:pt-48 relative z-10">
+      <div class="max-w-2xl mx-auto px-6 text-center">
+
+        <!-- Loading state -->
+        <div id="success-loading" class="py-20">
+          <div class="spinner mx-auto mb-4"></div>
+          <p class="text-sm text-slate-400 uppercase tracking-widest animate-pulse">Verifying your payment...</p>
+        </div>
+
+        <!-- Success state (hidden until verified) -->
+        <div id="success-content" class="hidden">
+          <div class="success-checkmark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+
+          <h1 class="text-3xl md:text-5xl font-black tracking-tight mb-4">
+            <span class="gradient-text">Payment Successful!</span>
+          </h1>
+          <p class="text-lg text-slate-500 mb-8 leading-relaxed">
+            Thank you for your purchase! Your digital product is ready for immediate download.
+          </p>
+
+          <!-- Order Details Card -->
+          <div id="order-card" class="card-premium p-8 md:p-10 text-left mb-8">
+            <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">Order Details</h3>
+
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-slate-500">Product</span>
+                <span id="success-product-name" class="text-sm font-bold text-text">Loading...</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-slate-500">Amount Paid</span>
+                <span id="success-amount" class="text-sm font-bold text-text">—</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-slate-500">Payment ID</span>
+                <span id="success-payment-id" class="text-xs font-mono text-slate-400 truncate max-w-[200px]">—</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-slate-500">Date</span>
+                <span id="success-date" class="text-sm font-medium text-text">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Download Instructions -->
+          <div class="card-premium p-8 md:p-10 text-left mb-8">
+            <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">How to Access Your Product</h3>
+
+            <div class="space-y-5">
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white text-sm font-bold flex-shrink-0">1</div>
+                <div>
+                  <p class="font-bold text-sm mb-1">Check Your Email</p>
+                  <p class="text-sm text-slate-500">We've sent a confirmation email with your download link to <strong id="success-email" class="text-text">your email address</strong>.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white text-sm font-bold flex-shrink-0">2</div>
+                <div>
+                  <p class="font-bold text-sm mb-1">Download Your Files</p>
+                  <p class="text-sm text-slate-500">Click the download link in the email to access your digital product instantly.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white text-sm font-bold flex-shrink-0">3</div>
+                <div>
+                  <p class="font-bold text-sm mb-1">Need Help?</p>
+                  <p class="text-sm text-slate-500">Contact us at <a href="mailto:support@avoriai.vercel.app" class="text-primary hover:underline">support@avoriai.vercel.app</a> if you have any issues.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a id="success-product-link" href="products.html" class="inline-flex items-center h-12 px-8 rounded-xl btn-primary text-sm font-bold tracking-wider uppercase transition-all hover:scale-[1.02] active:scale-[0.98]">
+              Browse More Products
+            </a>
+            <a href="products.html" class="inline-flex items-center h-12 px-8 rounded-xl bg-white border border-slate-200 text-sm font-bold tracking-wider uppercase text-slate-600 hover:border-primary hover:text-primary transition-all">
+              Back to Store
+            </a>
+          </div>
+        </div>
+
+        <!-- Error state (hidden) -->
+        <div id="success-error" class="hidden py-20">
+          <div class="w-16 h-16 rounded-full bg-error/10 flex items-center justify-center mx-auto mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-error">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-black tracking-tight mb-4">Payment Pending</h2>
+          <p class="text-slate-500 mb-8 leading-relaxed">Your payment is being processed. You'll receive an email confirmation shortly with your download link.</p>
+          <a href="products.html" class="inline-flex items-center h-12 px-8 rounded-xl btn-primary text-sm font-bold tracking-wider uppercase">Back to Store</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="pt-20 pb-12 relative z-10 bg-white border-t border-slate-100">
+      <div class="max-w-7xl mx-auto px-6 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <span>© 2026 Aivora. All rights reserved.</span>
+        <a href="contact.html" class="hover:text-primary transition-colors">Contact Support</a>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/js/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) window.lucide.createIcons();
+
+        // Mobile menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (menuBtn && menu) {
+          menuBtn.addEventListener('click', () => {
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+              menu.classList.remove('hidden');
+              requestAnimationFrame(() => menu.classList.remove('opacity-0', '-translate-y-4'));
+            } else {
+              menu.classList.add('opacity-0', '-translate-y-4');
+              setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+          });
+        }
+
+        // Read payment details from URL params (set by Dodo return_url)
+        const params = new URLSearchParams(window.location.search);
+        const paymentId = params.get('payment_id') || params.get('id') || '';
+        const productName = params.get('product') || params.get('product_name') || params.get('metadata[product_title]') || '';
+        const amount = params.get('amount') || '';
+        const currency = params.get('currency') || 'USD';
+        const customerEmail = params.get('email') || params.get('customer_email') || '';
+        const productSlug = params.get('product_slug') || params.get('metadata[product_slug]') || '';
+
+        // If we have params, show success immediately
+        if (paymentId || productName || params.get('checkout') === 'success') {
+          showSuccess();
+        } else {
+          // No params — could be direct visit or pending payment
+          // Show "pending" state after a brief loading
+          setTimeout(() => {
+            document.getElementById('success-loading').classList.add('hidden');
+            document.getElementById('success-error').classList.remove('hidden');
+          }, 3000);
+        }
+
+        function showSuccess() {
+          document.getElementById('success-loading').classList.add('hidden');
+          document.getElementById('success-content').classList.remove('hidden');
+
+          // Populate order details
+          const nameEl = document.getElementById('success-product-name');
+          const amountEl = document.getElementById('success-amount');
+          const paymentIdEl = document.getElementById('success-payment-id');
+          const dateEl = document.getElementById('success-date');
+          const emailEl = document.getElementById('success-email');
+          const productLinkEl = document.getElementById('success-product-link');
+
+          if (nameEl) nameEl.textContent = productName || 'Aivora Digital Product';
+          if (amountEl) amountEl.textContent = amount ? `$${parseFloat(amount).toFixed(2)}` : 'Paid';
+          if (paymentIdEl) paymentIdEl.textContent = paymentId || 'Processing...';
+          if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          if (emailEl) emailEl.textContent = customerEmail || 'your email address';
+          if (productLinkEl && productSlug) {
+            productLinkEl.href = `product.html?slug=${productSlug}`;
+          }
+
+          // Confetti animation
+          launchConfetti();
+        }
+
+        function launchConfetti() {
+          const colors = ['#2563eb', '#8b5cf6', '#ec4899', '#22c55e', '#f59e0b', '#ef4444'];
+          for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+              const confetti = document.createElement('div');
+              confetti.className = 'confetti';
+              confetti.style.left = Math.random() * 100 + 'vw';
+              confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+              confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+              confetti.style.width = (Math.random() * 8 + 6) + 'px';
+              confetti.style.height = (Math.random() * 8 + 6) + 'px';
+              document.body.appendChild(confetti);
+              setTimeout(() => confetti.remove(), 4000);
+            }, i * 30);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

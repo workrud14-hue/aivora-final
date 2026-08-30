@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Scope & Payment Defense Kit - Aivora</title>
+    <meta name="description" content="Scope-of-work templates, change order forms, payment demand letters, and 10+ copy-paste scripts for freelancers who are done working for free. One-time purchase, instant download." />
+
+    <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg" />
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body class="bg-bg text-text font-sans selection:bg-accent/20 antialiased">
+
+    <div id="scroll-progress"></div>
+
+    <div id="loading-overlay">
+      <div class="flex flex-col items-center">
+        <div class="spinner mb-4"></div>
+        <div class="font-medium text-sm text-slate-400 uppercase tracking-widest animate-pulse">AIVORA</div>
+      </div>
+    </div>
+
+    <div class="aurora-bg">
+      <div class="blob blob-primary"></div>
+      <div class="blob blob-secondary"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <nav class="fixed top-0 inset-x-0 z-40 transition-all duration-300 py-5 border-b border-transparent">
+      <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2.5 text-2xl font-black tracking-tight text-text group">
+          <img data-site-logo src="" alt="Aivora Logo" class="w-9 h-9 rounded-xl object-cover border border-slate-200 shadow-lg group-hover:scale-105 transition-transform" referrerpolicy="no-referrer" style="display:none" />
+          <span data-logo-fallback class="w-9 h-9 rounded-xl gradient-bg flex items-center justify-center text-white font-black text-sm shadow-lg">A</span>
+          <span class="gradient-text">Aivora</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="index.html" class="text-slate-600 hover:text-primary transition-colors">Home</a>
+          <a href="products.html" class="text-slate-600 hover:text-primary transition-colors">Products</a>
+          <a href="blog.html" class="text-slate-600 hover:text-primary transition-colors">Blog</a>
+          <a href="about.html" class="text-slate-600 hover:text-primary transition-colors">About</a>
+          <a href="faq.html" class="text-slate-600 hover:text-primary transition-colors">FAQ</a>
+          <a href="contact.html" class="text-slate-600 hover:text-primary transition-colors">Contact</a>
+        </div>
+
+        <div class="hidden md:flex items-center gap-3">
+          <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sun-icon"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="moon-icon hidden"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          <a href="#pricing" class="inline-flex items-center h-10 px-5 rounded-xl btn-primary text-xs font-semibold tracking-wider uppercase">
+            Get the Kit
+          </a>
+        </div>
+
+        <button id="mobile-menu-btn" aria-expanded="false" class="md:hidden p-2 text-slate-600 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+
+      <div id="mobile-menu" class="hidden md:hidden fixed top-[72px] inset-x-6 glass-panel rounded-2xl p-6 flex flex-col gap-4 border border-slate-200 opacity-0 -translate-y-4 transition-all duration-300 z-50">
+        <a href="index.html" class="text-slate-600 hover:text-primary font-medium">Home</a>
+        <a href="products.html" class="text-slate-600 hover:text-primary font-medium">Products</a>
+        <a href="blog.html" class="text-slate-600 hover:text-primary font-medium">Blog</a>
+        <a href="about.html" class="text-slate-600 hover:text-primary font-medium">About</a>
+        <a href="faq.html" class="text-slate-600 hover:text-primary font-medium">FAQ</a>
+        <a href="contact.html" class="text-slate-600 hover:text-primary font-medium">Contact</a>
+      </div>
+    </nav>
+
+    <main class="relative z-10">
+
+      <!-- ============ HERO ============ -->
+      <header class="pt-36 pb-16 md:pt-44 md:pb-24 overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest text-accent-dark bg-accent/10 border border-accent/30 mb-6">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> For Solo Freelancers
+          </span>
+
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08] mb-6">
+            The client asked for <span class="gradient-text">"one small thing."</span><br class="hidden sm:block" />
+            It cost you 8 hours.
+          </h1>
+
+          <p class="max-w-2xl mx-auto text-base md:text-lg text-slate-500 leading-relaxed mb-4">
+            Every freelancer knows that moment — the message lands, your stomach drops, and you say yes
+            because you don't have a script ready. The Scope &amp; Payment Defense Kit means you never have
+            to improvise again.
+          </p>
+          <p class="max-w-2xl mx-auto text-sm text-slate-500 leading-relaxed mb-10">
+            Templates, forms, and word-for-word scripts for scope creep and unpaid invoices.
+            Copy, paste, send. Done.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+            <a href="#pricing" data-buy-button class="inline-flex items-center gap-2 h-14 px-10 rounded-xl btn-primary text-sm font-bold tracking-wider uppercase w-full sm:w-auto justify-center">
+              Get the Kit — <span class="font-black">₹499</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <span class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-success mr-1.5"></i> One-time payment</span>
+            <span class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-success mr-1.5"></i> Instant download</span>
+            <span class="flex items-center"><i data-lucide="check" class="w-3.5 h-3.5 text-success mr-1.5"></i> Yours forever</span>
+            <span class="flex items-center"><i data-lucide="x" class="w-3.5 h-3.5 text-error mr-1.5"></i> Not a subscription</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ============ THE PROBLEM ============ -->
+      <section class="py-16 md:py-24 border-t border-slate-100">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-12 md:mb-16">
+            <span class="text-xs font-semibold uppercase tracking-widest text-accent-dark mb-2 block">Sound Familiar?</span>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight">Three messages you've already received</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card-premium p-8">
+              <div class="w-11 h-11 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center mb-5">
+                <i data-lucide="message-circle-more" class="w-5 h-5 text-accent-dark"></i>
+              </div>
+              <p class="font-mono text-xs text-slate-400 mb-3">Tuesday, 11:47 PM</p>
+              <p class="text-sm text-slate-600 leading-relaxed italic mb-4">"Hey! Love the work. Quick thing — could you also make it work on mobile? Shouldn't take long, right?"</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-error">The scope-creep ask</p>
+              <p class="text-sm text-slate-500 mt-2 leading-relaxed">It wasn't in the brief. There is no brief. You say yes because pushing back feels risky.</p>
+            </div>
+
+            <div class="card-premium p-8">
+              <div class="w-11 h-11 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center mb-5">
+                <i data-lucide="ghost" class="w-5 h-5 text-accent-dark"></i>
+              </div>
+              <p class="font-mono text-xs text-slate-400 mb-3">Invoice #014 · 34 days overdue</p>
+              <p class="text-sm text-slate-600 leading-relaxed italic mb-4">You've sent two reminders. They've been "seen." You're now drafting a third and second-guessing every word.</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-error">The ghosted payment</p>
+              <p class="text-sm text-slate-500 mt-2 leading-relaxed">Chasing money feels awkward because you have no professional process for it — so you either go silent or sound desperate.</p>
+            </div>
+
+            <div class="card-premium p-8">
+              <div class="w-11 h-11 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center mb-5">
+                <i data-lucide="repeat" class="w-5 h-5 text-accent-dark"></i>
+              </div>
+              <p class="font-mono text-xs text-slate-400 mb-3">Project kickoff, week one</p>
+              <p class="text-sm text-slate-600 leading-relaxed italic mb-4">"We'll figure out the details as we go — you're easy to work with." Translation: nothing is written down.</p>
+              <p class="text-xs font-bold uppercase tracking-wider text-error">The "just this once" client</p>
+              <p class="text-sm text-slate-500 mt-2 leading-relaxed">Verbal agreements and ad-hoc emails aren't a scope system. Without one, every project starts already behind.</p>
+            </div>
+          </div>
+
+          <p class="text-center text-sm md:text-base text-slate-500 max-w-2xl mx-auto mt-10 leading-relaxed">
+            Freelancers lose thousands a year this way — not from lack of skill, but from lacking the
+            <strong class="text-text">right words at the right moment</strong>. This kit puts them in front of you.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ WHAT'S INSIDE ============ -->
+      <section id="whats-inside" class="py-16 md:py-24 border-t border-slate-100">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="text-center mb-12 md:mb-16">
+            <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-2 block">What's Inside</span>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4">Five documents. Zero improvising.</h2>
+            <p class="max-w-xl mx-auto text-sm md:text-base text-slate-500 leading-relaxed">Fill-in-the-blank formats you can use in under two minutes — before the work, during the ask, and after the invoice.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card-premium p-7 lg:col-span-2 flex flex-col sm:flex-row gap-5">
+              <span class="shrink-0 w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-black text-sm shadow-md">01</span>
+              <div>
+                <h3 class="font-bold text-lg mb-1.5">Scope of Work Template</h3>
+                <p class="text-sm text-slate-500 leading-relaxed mb-3">Fill-in-the-blank structure with explicit <strong class="text-text">"what's NOT included"</strong> language — the sentence that quietly ends most scope disputes before they start.</p>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-primary">Solves: vague projects that expand silently</p>
+              </div>
+            </div>
+
+            <div class="card-premium p-7">
+              <span class="shrink-0 w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-black text-sm shadow-md mb-4">02</span>
+              <h3 class="font-bold text-lg mb-1.5">Change Order Form</h3>
+              <p class="text-sm text-slate-500 leading-relaxed mb-3">The exact structure to price and document extra work — before you do it.</p>
+              <p class="text-[11px] font-bold uppercase tracking-wider text-primary">Solves: unpaid "small additions"</p>
+            </div>
+
+            <div class="card-premium p-7 lg:col-span-2 flex flex-col sm:flex-row gap-5">
+              <span class="shrink-0 w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-black text-sm shadow-md">03</span>
+              <div>
+                <h3 class="font-bold text-lg mb-1.5">10+ Copy-Paste Scripts</h3>
+                <p class="text-sm text-slate-500 leading-relaxed mb-3">Word-for-word email and DM responses for the moment a client says <em>"can you just quickly add..."</em> — polite, firm, and ready to send in seconds.</p>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-primary">Solves: freezing up when the ask lands</p>
+              </div>
+            </div>
+
+            <div class="card-premium p-7">
+              <span class="shrink-0 w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-black text-sm shadow-md mb-4">04</span>
+              <h3 class="font-bold text-lg mb-1.5">Payment Demand Sequence</h3>
+              <p class="text-sm text-slate-500 leading-relaxed mb-3">A 3-step letter ladder: friendly reminder → formal demand → final notice. Professional pressure, no fake lawyer threats needed.</p>
+              <p class="text-[11px] font-bold uppercase tracking-wider text-primary">Solves: invoices stuck at "seen"</p>
+            </div>
+
+            <div class="card-premium p-7 md:col-span-2 lg:col-span-3 flex flex-col sm:flex-row gap-5">
+              <span class="shrink-0 w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-black text-sm shadow-md">05</span>
+              <div>
+                <h3 class="font-bold text-lg mb-1.5">Client Brief Questionnaire</h3>
+                <p class="text-sm text-slate-500 leading-relaxed mb-3">Forces clients to be specific upfront — deliverables, revisions, timelines, and sign-off — before scope creep gets a chance to exist. Send it before quoting anything.</p>
+                <p class="text-[11px] font-bold uppercase tracking-wider text-primary">Solves: projects that start undefined</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ HOW IT WORKS ============ -->
+      <section class="py-16 md:py-24 border-t border-slate-100">
+        <div class="max-w-5xl mx-auto px-6">
+          <div class="text-center mb-12 md:mb-16">
+            <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-2 block">How It Works</span>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight">From checkout to protected in 60 seconds</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card-premium p-8 text-center">
+              <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white font-black mx-auto mb-5 shadow-lg">1</div>
+              <h3 class="font-bold text-lg mb-2">Buy once</h3>
+              <p class="text-sm text-slate-500 leading-relaxed">One payment of ₹499. No account, no subscription, no upsell maze.</p>
+            </div>
+            <div class="card-premium p-8 text-center">
+              <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white font-black mx-auto mb-5 shadow-lg">2</div>
+              <h3 class="font-bold text-lg mb-2">Download instantly</h3>
+              <p class="text-sm text-slate-500 leading-relaxed">PDF + editable document files land in your inbox the second you pay.</p>
+            </div>
+            <div class="card-premium p-8 text-center">
+              <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white font-black mx-auto mb-5 shadow-lg">3</div>
+              <h3 class="font-bold text-lg mb-2">Copy-paste when needed</h3>
+              <p class="text-sm text-slate-500 leading-relaxed">Next time the "quick favor" arrives, you open the kit and hit send. That's the whole learning curve.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WHO IT'S FOR / NOT FOR ============ -->
+      <section class="py-16 md:py-24 border-t border-slate-100">
+        <div class="max-w-5xl mx-auto px-6">
+          <div class="text-center mb-12 md:mb-16">
+            <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-2 block">Straight Answer</span>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight">Who this is — and isn't — for</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="card-premium p-8 border-l-4 border-l-success">
+              <div class="flex items-center gap-3 mb-5">
+                <i data-lucide="user-check" class="w-5 h-5 text-success"></i>
+                <h3 class="font-bold text-lg">Built for you if...</h3>
+              </div>
+              <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> You're a solo designer, writer, developer, editor, or creator handling client work alone</li>
+                <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> You've absorbed unpaid extra work because you had no script ready in the moment</li>
+                <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> You're currently chasing an overdue invoice and don't know what to say next</li>
+                <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-success shrink-0 mt-0.5"></i> You want lightweight templates you can use today — not a system to learn</li>
+              </ul>
+            </div>
+
+            <div class="card-premium p-8 border-l-4 border-l-error">
+              <div class="flex items-center gap-3 mb-5">
+                <i data-lucide="user-x" class="w-5 h-5 text-error"></i>
+                <h3 class="font-bold text-lg">Not for you if...</h3>
+              </div>
+              <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
+                <li class="flex gap-3"><i data-lucide="x" class="w-4 h-4 text-error shrink-0 mt-0.5"></i> You run an agency or team and need contract management software</li>
+                <li class="flex gap-3"><i data-lucide="x" class="w-4 h-4 text-error shrink-0 mt-0.5"></i> You want legal advice — these are practical templates, not counsel from a lawyer</li>
+                <li class="flex gap-3"><i data-lucide="x" class="w-4 h-4 text-error shrink-0 mt-0.5"></i> You expect a magic fix — this is a toolkit that works when you use it</li>
+                <li class="flex gap-3"><i data-lucide="x" class="w-4 h-4 text-error shrink-0 mt-0.5"></i> You need another subscription — this is one payment, yours forever</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ REVIEWS PLACEHOLDER ============ -->
+      <section class="py-16 md:py-24 border-t border-slate-100 hidden md:block">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+          <span class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2 block">Reviews</span>
+          <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-6">Real feedback, coming soon</h2>
+          <div class="card-premium p-8 md:p-10 max-w-2xl mx-auto border-dashed">
+            <i data-lucide="message-square-quote" class="w-8 h-8 mx-auto text-slate-300 mb-4"></i>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              We don't publish invented testimonials. As freelancers put the kit to work, their real
+              experiences will appear here. If you've used it, we'd genuinely like to hear how it went.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PRICING ============ -->
+      <section id="pricing" class="py-16 md:py-24 border-t border-slate-100">
+        <div class="max-w-3xl mx-auto px-6">
+          <div class="card-premium p-8 md:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 px-4 py-1.5 rounded-bl-2xl badge-best text-[10px] font-black uppercase tracking-widest">Launch Price</div>
+
+            <div class="text-center mb-8 pt-4">
+              <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-2 block">One-Time Purchase</span>
+              <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-4">The Scope &amp; Payment Defense Kit</h2>
+              <div class="flex items-end justify-center gap-3 mb-2">
+                <span class="text-5xl md:text-6xl font-black tracking-tight">₹499</span>
+                <span class="text-lg text-slate-400 line-through mb-1.5">₹799</span>
+              </div>
+              <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Single payment · Yours forever · Instant download</p>
+            </div>
+
+            <ul class="space-y-3.5 text-sm text-slate-600 max-w-md mx-auto mb-10">
+              <li class="flex gap-3"><i data-lucide="file-check-2" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> Fill-in-the-blank Scope of Work template with "what's NOT included" language</li>
+              <li class="flex gap-3"><i data-lucide="file-pen" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> Change Order form to price extra work before doing it</li>
+              <li class="flex gap-3"><i data-lucide="copy" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> 10+ copy-paste email &amp; DM scripts for scope-creep asks</li>
+              <li class="flex gap-3"><i data-lucide="mail-warning" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> 3-step payment demand sequence (reminder → demand → final notice)</li>
+              <li class="flex gap-3"><i data-lucide="clipboard-list" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> Client brief questionnaire that locks scope in upfront</li>
+              <li class="flex gap-3"><i data-lucide="infinity" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i> Free updates to the kit, forever</li>
+            </ul>
+
+            <div class="text-center">
+              <!-- TODO: Replace href with the live Gumroad product URL when ready -->
+              <a href="#" data-buy-button class="inline-flex items-center gap-2 h-14 px-12 rounded-xl btn-primary text-sm font-bold tracking-wider uppercase cursor-pointer shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-transform">
+                Get Instant Access — ₹499
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+              <p class="text-xs text-slate-400 mt-4">Secure checkout via Gumroad · PDF + editable files delivered instantly</p>
+            </div>
+          </div>
+
+          <p class="text-center text-sm text-slate-500 mt-8 leading-relaxed max-w-xl mx-auto">
+            One unpaid "quick favor" costs more than this kit. It pays for itself the first time you
+            send one script instead of absorbing eight hours.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ FAQ ============ -->
+      <section class="py-16 md:py-24 border-t border-slate-100">
+        <div class="max-w-3xl mx-auto px-6">
+          <div class="text-center mb-12 md:mb-16">
+            <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-2 block">Questions</span>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tight">Before you buy</h2>
+          </div>
+
+          <div class="space-y-4">
+            <div class="faq-item card-premium !p-0 overflow-hidden cursor-pointer">
+              <button type="button" class="faq-question w-full flex items-center justify-between gap-4 p-6 text-left">
+                <span class="font-bold text-sm md:text-base">Is this legal advice?</span>
+                <i data-lucide="plus" class="faq-icon w-5 h-5 text-primary shrink-0 transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer px-6">
+                <p class="text-sm text-slate-500 leading-relaxed pb-6">No. These are practical, professionally structured templates for everyday freelance situations — not legal counsel. For contracts with serious money at stake, consult a qualified lawyer in your jurisdiction.</p>
+              </div>
+            </div>
+
+            <div class="faq-item card-premium !p-0 overflow-hidden cursor-pointer">
+              <button type="button" class="faq-question w-full flex items-center justify-between gap-4 p-6 text-left">
+                <span class="font-bold text-sm md:text-base">What format do I get?</span>
+                <i data-lucide="plus" class="faq-icon w-5 h-5 text-primary shrink-0 transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer px-6">
+                <p class="text-sm text-slate-500 leading-relaxed pb-6">A polished PDF for reading, plus editable document files (DOCX) for every template and script — so you can fill in your details and send immediately.</p>
+              </div>
+            </div>
+
+            <div class="faq-item card-premium !p-0 overflow-hidden cursor-pointer">
+              <button type="button" class="faq-question w-full flex items-center justify-between gap-4 p-6 text-left">
+                <span class="font-bold text-sm md:text-base">Do I need Notion, an app, or any special tool?</span>
+                <i data-lucide="plus" class="faq-icon w-5 h-5 text-primary shrink-0 transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer px-6">
+                <p class="text-sm text-slate-500 leading-relaxed pb-6">No. Everything works completely standalone with any document editor and your email. Open, customize, send — that's it.</p>
+              </div>
+            </div>
+
+            <div class="faq-item card-premium !p-0 overflow-hidden cursor-pointer">
+              <button type="button" class="faq-question w-full flex items-center justify-between gap-4 p-6 text-left">
+                <span class="font-bold text-sm md:text-base">Is this a subscription?</span>
+                <i data-lucide="plus" class="faq-icon w-5 h-5 text-primary shrink-0 transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer px-6">
+                <p class="text-sm text-slate-500 leading-relaxed pb-6">No — and never will be. It's a one-time payment of ₹499. The kit is yours forever, including future updates.</p>
+              </div>
+            </div>
+
+            <div class="faq-item card-premium !p-0 overflow-hidden cursor-pointer">
+              <button type="button" class="faq-question w-full flex items-center justify-between gap-4 p-6 text-left">
+                <span class="font-bold text-sm md:text-base">Will this guarantee clients stop asking for free extras?</span>
+                <i data-lucide="plus" class="faq-icon w-5 h-5 text-primary shrink-0 transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer px-6">
+                <p class="text-sm text-slate-500 leading-relaxed pb-6">Honestly? No tool can guarantee human behavior. What this kit guarantees is that you'll always have a professional, ready-made response — so extra work gets priced and documented instead of silently absorbed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ FINAL CTA ============ -->
+      <section class="py-20 md:py-28 border-t border-slate-100">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+          <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-6 leading-[1.1]">
+            The next "small favor" is coming.<br />
+            <span class="gradient-text">Be ready for it.</span>
+          </h2>
+          <p class="text-sm md:text-base text-slate-500 max-w-xl mx-auto leading-relaxed mb-10">
+            Five documents, ten-plus scripts, one payment. The paperwork you wish you'd had
+            before this week's project started.
+          </p>
+          <!-- TODO: Replace href with the live Gumroad product URL when ready -->
+          <a href="#" data-buy-button class="inline-flex items-center gap-2 h-14 px-12 rounded-xl btn-primary text-sm font-bold tracking-wider uppercase cursor-pointer shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-transform">
+            Get the Kit — ₹499 Once
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="pt-20 pb-12 relative z-10 bg-white border-t border-slate-100">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div>
+          <a href="index.html" class="flex items-center gap-2.5 text-2xl font-black tracking-tight text-text mb-6">
+            <span class="w-9 h-9 rounded-xl gradient-bg flex items-center justify-center shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" class="w-4 h-4"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </span>
+            <span class="gradient-text">Aivora</span>
+          </a>
+          <p class="text-slate-500 text-sm leading-relaxed max-w-xs">Premium AI digital products for creators, entrepreneurs, and businesses.</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-sm text-text mb-6 uppercase tracking-wider">Products</h4>
+          <ul class="space-y-3 text-sm text-slate-500">
+            <li><a href="products.html" class="hover:text-primary transition-colors">All Products</a></li>
+            <li><a href="product.html?slug=ai-prompt-pack" class="hover:text-primary transition-colors">AI Prompt Pack</a></li>
+            <li><a href="product.html?slug=email-swipe-file" class="hover:text-primary transition-colors">Email Swipe Files</a></li>
+            <li><a href="defense-kit.html" class="hover:text-primary transition-colors">Scope &amp; Payment Defense Kit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-sm text-text mb-6 uppercase tracking-wider">Company</h4>
+          <ul class="space-y-3 text-sm text-slate-500">
+            <li><a href="about.html" class="hover:text-primary transition-colors">About</a></li>
+            <li><a href="blog.html" class="hover:text-primary transition-colors">Blog</a></li>
+            <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+            <li><a href="faq.html" class="hover:text-primary transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-sm text-text mb-6 uppercase tracking-wider">Support</h4>
+          <ul class="space-y-3 text-sm text-slate-500">
+            <li><a href="privacy.html" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+            <li><a href="terms.html" class="hover:text-primary transition-colors">Terms of Service</a></li>
+            <li><a href="refund.html" class="hover:text-primary transition-colors">Refund Policy</a></li>
+            <li><a href="cookie-policy.html" class="hover:text-primary transition-colors">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <span>© 2026 Aivora. All rights reserved.</span>
+        <span>The Scope &amp; Payment Defense Kit is a practical toolkit, not legal advice.</span>
+      </div>
+    </footer>
+
+    <button id="back-to-top" class="fixed bottom-24 right-6 z-40 w-12 h-12 rounded-xl btn-primary flex items-center justify-center cursor-pointer shadow-lg opacity-0 pointer-events-none translate-y-4 transition-all duration-300" aria-label="Scroll Back to Top">
+      <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Sticky Buy Bar -->
+    <div id="sticky-cta-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-700 px-4 py-2.5 md:px-6 md:py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-4">
+        <div class="hidden sm:block">
+          <div class="text-xs md:text-sm font-bold text-text truncate max-w-[220px] md:max-w-[320px]">Scope &amp; Payment Defense Kit</div>
+          <div class="text-[10px] md:text-xs text-slate-500">₹499 · One-time · Instant download</div>
+        </div>
+        <!-- TODO: Replace href with the live Gumroad product URL when ready -->
+        <a href="#pricing" data-buy-button class="flex items-center justify-center gap-2 h-11 md:h-12 px-5 md:px-8 w-full sm:w-auto rounded-xl btn-primary text-xs md:text-sm font-bold tracking-wider uppercase cursor-pointer shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-transform">
+          Get It Now — ₹499
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) window.lucide.createIcons();
+
+        // Mobile menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (menuBtn && menu) {
+          menuBtn.addEventListener('click', () => {
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+              menu.classList.remove('hidden');
+              requestAnimationFrame(() => menu.classList.remove('opacity-0', '-translate-y-4'));
+            } else {
+              menu.classList.add('opacity-0', '-translate-y-4');
+              setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+          });
+        }
+
+        // FAQ accordion (reuses .faq-item / .faq-answer styles from index.css)
+        document.querySelectorAll('.faq-item').forEach((item) => {
+          const q = item.querySelector('.faq-question');
+          if (!q) return;
+          q.addEventListener('click', () => item.classList.toggle('open'));
+        });
+
+        // Placeholder buy buttons until the Gumroad link is added
+        document.querySelectorAll('[data-buy-button]').forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            if (btn.getAttribute('href') === '#') {
+              e.preventDefault();
+              alert('Checkout link coming soon — this will open Gumroad.');
+            }
+          });
+        });
+
+        // Loading overlay fade-out
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) setTimeout(() => overlay.classList.add('hidden'), 250);
+
+        // Scroll progress bar
+        const progress = document.getElementById('scroll-progress');
+        if (progress) {
+          window.addEventListener('scroll', () => {
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            progress.style.width = total > 0 ? (window.scrollY / total) * 100 + '%' : '0%';
+          }, { passive: true });
+        }
+
+        // Back to top
+        const backToTop = document.getElementById('back-to-top');
+        if (backToTop) {
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+              backToTop.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            } else {
+              backToTop.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }
+          }, { passive: true });
+          backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+      });
+    </script>
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

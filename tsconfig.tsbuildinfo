@@ -1,1 +1,0 @@
-{"root":["./vite.config.ts","./api/send-email.ts","./api/cron/update-rates.ts","./src/js/main.js","./src/js/supabaseClient.js"],"errors":true,"version":"5.8.3"}
